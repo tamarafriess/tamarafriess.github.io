@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+        <!--import fonts-->
+        <style>@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto');
+        </style>
+        <!---import slick-->
+        <link rel="stylesheet" type="text/css" href="src/slick/slick.css">
+        <link rel="stylesheet" type="text/css" href="src/slick/slick-theme.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+		<title>OnePager</title>
+		<style type="text/css">
+            
+            body {
+                display: flex;
+                flex-wrap: wrap;
+                
+                font-size: 1.4em;
+                font-family: 'Roboto Mono', monospace;
+                margin: 0px;
+                color: black;
+                background-color: rgba(178, 255, 234, 0); 
+            }
+            p {
+                margin: 0px;
+            }
+            .raster-space {
+                width: 4vw;
+                box-sizing: border-box;
+                height: 100%;
+            }
+            .raster-main { 
+                width: 96vw;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                box-sizing: border-box;
+                height: 100%;
+            }
+            .raster-container {
+                display: flex;
+            }
+            /*automatic*/
+            .raster-content {
+                flex: 1 1 0; 
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /*custom*/
+            .spalte-1of1, .spalte-1of4, .spalte-1of2, .spalte-3of4 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .spalte-1of4 {
+                width: 25%;
+                flex-basis: auto;
+            }
+            .spalte-1of1 {
+                width: 52em;
+            }
+            .spalte-1of2 {
+                width: 50%;
+            }
+            .spalte-3of4 {
+                width: 75%;
+                flex-basis: auto;
+            }
+            .is-left {
+                margin-right: 0;
+                margin-left: auto;
+            }
+            .is-centered {
+                margin-left: auto;
+                margin-right: auto;
+                text-align: center;
+            }
+            .is-centered ul {
+                display: inline-block;
+            }
+            .is-vertically-centered {
+                align-items: center;   
+            }
+            #intro {
+                width: 80%;
+                margin-bottom: 7em;
+            }
+            #CV {
+                margin-bottom: 7em;
+            }
+            /*------------------------------------------------*/
+            /***menu settings------------*/
+            .menu {
+                /*positioning*/
+                position: fixed;
+                
+                left: 4%;
+                width: 100%;
+                height: 100%;
+                
+                /*style*/
+                background-color: rgba(178, 255, 234, 1);
+                transition: 0.7s;
+                transform: rotateY(270deg);
+                transform-origin: left;
+                
+                z-index: 1;
+            }
+            
+            .menu.is-visible {
+                display: block;
+                transition: 0.9s;
+                transform: rotateY(0deg); 
+             
+            }
+            /***menu link style-----------*/
+            
+            #nav {
+                /*zentrieren*/
+                position: fixed;
+                top: 50%;
+                /*width: 50%;*/
+                transform: translateY(-50%);
+            } 
+            /***menu toggle button------------*/
+            
+            .menu-toggle {
+                background-color: black;
+                color: white;
+                font-family: 'Roboto Mono', monospace;
+                font-size: 1em;
+                font-weight: 300;
+                
+                position: fixed;
+                height: 100%;
+                width: inherit;
+            }
+            
+           .menu-toggle-button {
+                position: absolute;
+                top: 50vh;
+                transform: translateY(-50%);
+            }
+            .menu-toggle-button > span {
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+            /***hover effect menu links----*/
+            .scene {
+              /* perspective property */
+                width: 100%;
+                height: 100%;
+                perspective: 50vw;
+            }
+
+            .panel {
+                text-align: left;
+                margin: 2rem;
+                
+                transform-origin: left;
+                transition: 2s;
+            }
+            .panel:hover {
+                transform: rotateY(+40deg) ;
+                transition: 0.7s;
+            }
+          
+            .panel a {
+                font-family: 'Roboto Mono', monospace;
+                font-weight: 1000;
+                font-size: 4.8rem;
+                color: black;
+                text-decoration: none;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                padding-bottom: 0.5rem;
+                padding-top: 0.5rem;
+                
+            }
+            .panel a:hover {
+                color:white;
+                background-color: black;
+                transition: 0.7s;
+            }
+            /***slick slider-----*/
+            
+            #slides, #slides_foto, #slides_design, #slides_art {
+                z-index: -1;
+                margin-top: -2em;
+            }
+            #slides_design, #slides_art {
+                width: 400px;
+                
+            }
+            #slides_art {
+                margin-bottom: 5em;
+            }
+            #slide-description_foto, #slide-description_design, #slide-description_art {
+                padding-right: 2em;
+            }
+
+            /**-------------------*/
+            section {
+                min-height: 100vh;
+                padding-top: 0.9rem;
+                margin-bottom: -0.9rem;
+            }
+            img, video {
+                max-width: 100%;
+            }
+            h2, h3, h4 {
+                margin-bottom: 1em;
+                font-family: 'Roboto Mono', monospace;
+                font-size: 3em;
+                font-weight: 700;
+                display: block;
+            }
+            h2 {
+                background-color: black;
+                color: white ;
+                padding-left: 20px;
+                margin-top: 0;
+                transition: 0.3s;
+            }
+            h2:hover{
+                background-color: rgba(178, 255, 234, 1);
+                color: black;
+                transition: 0.2s;
+            }
+            h3 {
+                margin-top: 1em; 
+                font-style: bold;
+                padding-left: 20px;
+                text-decoration-line: underline;
+                text-decoration-color: rgba(178, 255, 234, 1);
+            }
+            #emoji{
+                text-decoration-line: none;
+                font-size: 3.5em;
+                margin-bottom: 0.6em;
+            }
+            h4 {
+                margin-top: 1.1em;
+                background-color: black;
+                color: white;
+                text-align: center;
+            }
+            .align-left {
+                text-align: left;
+            }
+            .align-right {
+                text-align: right;
+            }
+            ul {
+                list-style: none;
+                padding-left: 0rem;
+            }
+            li {
+                margin-bottom: 0.2rem;
+            }
+            .goodandbad li::before, #source li::before {
+                content: "■ ";
+            }
+            a, a:active, a:checked {
+                color: black;
+                background-color: rgba(178, 255, 234, 1);
+            }
+            .is-large {
+                font-size: 4em;
+            }
+            /**------TABLE-------------*/
+            table, th, td {
+            border-collapse: collapse;
+            }
+   
+            td {
+                border: 10px solid transparent;
+            }
+            th, td {
+                vertical-align: top;
+                text-align: left;
+                min-width: 25vw;
+                font-size: 1em;
+            }
+    
+            .academic td:nth-child(odd) {
+                width: 20vw;
+            }
+            .expproj {
+                height: 60vh;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                display: block;
+                margin-left: 10px;
+            }
+            .expproj tr:nth-child(even) {
+            background-color: #dedede;
+            }
+            .expproj td:nth-child(odd) {
+                width: 5vw;
+                text-align: center;
+            }
+            .expproj a, .expproj a:visited {
+                color: inherit;
+            }
+            .expproj p {
+                margin: 0px;
+                padding-left: 5px;
+
+            }
+
+            #rundw, #grktk, #amcybathlon, #idatase, #advancis {
+                color: rgba(0,0,0, 0.7);
+                margin: 0px;
+                padding: 10px;
+            }
+            
+    
+        </style>
+	</head>
+
+	<body>
+        <!---Menübutton-->
+        <div class="raster-space">
+            <div class="menu-toggle" onclick="toggleClass('.menu', 'is-visible')">
+                <div class="menu-toggle-button">
+                    <span>
+                        menu
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!---Navigation-->
+        <div class="menu" onclick="toggleClass('.menu', 'is-visible')">
+                <div id="nav">
+                    <div class="scene"> 
+                        <div class="panel"><a href="#start">start</a></div>
+                        <div class="panel"><a href="#selectedwork">selected work</a></div>
+                        <div class="panel"><a href="#CV">CV</a></div>
+                        <div class="panel"><a href="#contact">contact</a></div>
+                    </div>
+                </div>
+           
+        </div>
+       
+        <div class="raster-main">
+            <!---SECTION: START--------------------->
+            <section id="start">
+                <h2>Hello! Nice to meet you!</h2>
+                
+                <div class="raster-container is-vertically-centered">
+                        
+                    <div class="spalte-1of2">
+                        <div class="is-centered">
+                            <img src="src/img/tamarafriess.png" alt="tamara friess"></div>
+                        </div>
+                    <div class="spalte-1of2">
+                        
+                        <p>I'm Tamara Frieß, born in the 90s in Miltenberg, Germany. <br>I grew up in a small town in Bavaria at the border to Hesse and Baden-Württemberg. In 2013 I moved to Darmstadt where I currently study Communication Design (Diplom) at the Hochschule Darmstadt.</p><br>
+                            <p><strong>Contact me: </strong></p><img src="src/img/mail.png" alt="email">
+                        </div>
+              
+                </div>
+                <div class="raster-container">
+                    <br>
+                    <p class="is-centered is-large"><br>↓</p>
+                </div>
+            
+            </section>
+            <!---SECTION: INFO------------------------------------>
+            <section id="info">
+               
+                   <h3 id="emoji" class="is-centered">i like ☕ 🍕 🐈 🎮 🎨 <br>🍵 🎬 🥗 🦆 🎓 🍜 📷 🥦</h3>
+                <div class="is-centered" id="intro">
+                    
+                    <p>My greatest passion after coffee and pizza is to learn and try new things. In a perfect world these three components would ideally fall together at once, I would earn enough money and 
+                could live happily ever after?</p><br> 
+                <p> Well, this might be a bit unrealistic.  Nonetheless I‘m a huge enthusiast for good stories: if a story 
+                is told beautifully the medium
+                doesn‘t matter. It doesn‘t matter if it‘s art, 
+                literature, photography, design, websites, movies, games, or your uncles birthday party in march ‘08. If 
+                it remained in your brain, if it made you feel something it was a story worth telling. 
+                </p><br><p> I want to make people think and make them laugh or even make them cry (only if it has to be). This is what I live for. I want to make an impact.I want peope 
+                feel things and I want to be a part of that.</p>
+                    
+                </div>
+            </section>
+        
+        
+        <section id="selectedwork">
+            <h2>selected work</h2>
+            <div class="raster-container">
+                <p> Here are some of the stories I've told<br></p> 
+            </div>
+            <h3>photography</h3>
+            <div class="raster-container">
+                <div class="spalte-1of2">
+                        <div id="slides_foto" class="is-centered">
+                            <div><img src="src/img/slides_photo_01.png" alt="photo1"></div>
+                            <div><img src="src/img/slides_photo_03.png" alt="photo2"></div>
+                            <div><img src="src/img/slides_photo_02.png" alt="photo3"></div>
+                            <div><img src="src/img/slides_photo_04.png" alt="photo4"></div>
+                            <div><img src="src/img/slides_photo_05.png" alt="photo5"></div>
+                        </div>
+                    </div>
+            
+                
+                    <div class="raster-content">
+                        <p id="slide-description_foto">My neighbour Manfred accompanies me my whole life. Even though we are not related by blood he became an essential part of my family. <br>'Mein Nachbar' is a booklet which emerged from the course 'Fotografie 2' by Stefan Bayer in 2018. <br> <br> <a href='https://www.dropbox.com/s/05lj4w62x1t634y/2018_meinnachbar.pdf?dl=0'>→  click here for complete work<br>(only in German)</a></p>
+                    </div>
+                </div>
+                </section>
+            <section>
+            <h3>design</h3>
+            <div class="raster-container">
+                <div class="raster-content">
+                        <div id="slides_design" class="is-centered">
+                            <div><img src="src/img/slides_design_01.png" alt="design1"></div>
+                            <div><img src="src/img/slides_design_02.png" alt="design2"></div>
+                            <div><img src="src/img/slides_design_03.png" alt="design3"></div>
+                            <div><img src="src/img/slides_design_04.png" alt="design4"></div>
+                        </div>
+                    </div>
+                    <div class="raster-content">
+                        <p id="slide-description_design">'I’m here to learn' (2018) is a french fold brochure, a mock-up advertisement created in the course 'Typografie 2' by Rade Matic for the exhibition 'i am here to learn'. Where a computer is able to find patterns, the  given data often convey the impression of pure chaos. With the Software 'Processing' I programmed random arrangements of the title 'i'm here to learn' and stacked them on top of each other. In the final phase a further digital abstraction was performed. The intention was that the viewer can only rudimentarily grasp whats behind the pattern.</p>
+                    </div>
+                </div>
+           <h3>art</h3>
+            <div class="raster-container">
+                <div class="raster-content">
+                        <div id="slides_art" class="is-centered">
+                            <div><img src="src/img/slides_illus_slides_01.png" alt="illustration1"></div>
+                            <div><img src="src/img/slides_illus_slides_03.png" alt="illustration2"></div>
+                            <div><img src="src/img/slides_illus_slides_02.png" alt="illustration3"></div>
+                            <div><img src="src/img/slides_illus_slides_04.png" alt="illustration4"></div>
+                            <div><img src="src/img/slides_illus_slides_05.png" alt="illustration5"></div>
+                        </div>
+                    </div>
+                    <div class="raster-content">
+                        <p id="slide-description_art">'CR', 2017</p>
+                    </div>
+                </div>
+		</section>
+            <section id="skills">
+                <h3>skills</h3>
+                    <table style="width:100%">
+                        
+                        <tr>
+                            <td> </td> 
+                            <td> </td>
+                        </tr>
+                        <tr>
+                            <td> design programs</td>
+                            <td>  Adobe Illustrator, Adobe Indesign, Adobe Photoshop,
+Adobe Bridge, Content-Management-Systems (TYPO3, First Spirit),Pixelmator, Capture One 11</td>
+                        <tr><td>office programs</td>
+                            <td>
+Microsoft Office (Word, Excel, Powerpoint), Apple Office
+                                Software (Pages, Keynote, Numbers), LATEX</td>
+                        <tr><td>programming languages</td>
+                            <td>
+                                HTML/CSS, Processing, C/C++, Python, Java</td>
+                        </tr>
+                        <tr><td>languages</td>
+                            <td>
+                                german (mother tongue), english (B2+/C1), spanish (B1/B1+)</td>
+                        </tr>
+                </table>
+            </section>
+        <section id="CV">
+            <h2>CV</h2>
+               <h3>academic career</h3>
+               <div class="raster-content">
+                   <div class="academic">
+                       <table style="width:100%">
+                        <tr>
+                            <td> since 10.2017</td> 
+                            <td> <strong>Diplom Communication Design (FH),</strong><br>
+                            Hochschule Darmstadt — Darmstadt</td>
+                        </tr>
+                        <tr><td> 10.2013 – 09.2017 </td>
+                            <td><strong>Bachelor of Science  Computer Science,
+                                without degree</strong>
+
+                            <br>Technische Universität Darmstadt — Darmstadt
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>09.2010 – 07.2013</td>
+                            <td><strong>Higher Education Entrance Qualification</strong> <br> 
+                            Julius-Echter Gymnasium — Elsenfeld</td>
+                        </tr>
+                        <tr>
+                            <td> 09.2003 – 07.2010</td>
+                            <td><strong>Secondary School Certificate</strong>
+                            <br>Main-Limes Realschule — Obernburg</td>
+                        </tr>
+                        </table>
+                    </div>
+            </div>
+            <h3>experiences & projects</h3>
+            <div class="raster-content">
+                   <div class="expproj">
+                   <table style="width:100%">
+                        <tr>
+                            <th><b>when</b></th>
+                            <th><b>where</b></th>
+                        </tr>
+                        <tr>
+                            <td>07.2018 – 08.2018</td>
+                            <td>
+                            <p>Student Employee (semester break job)<br>
+                            R+W Antriebselemente GmbH, 
+                                <br>Klingenberg am Main</p></td> 
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><p>Documentation, weighing and measuring items of the current inventory</p></td>
+                            </tr>
+                        <tr>
+                            <td>01.2017 – 03.2018</td>
+                            <td><p>Student Employee<br> Graduiertenkolleg 'Privacy and Trust for Mobile Users’, <br>Technische Universität Darmstadt, Darmstadt</p></td>
+                         <tr>
+                                <td></td>
+                             <td><p>Conceptualization and creation of brochures, flyers, web content, presentations, and templates; website maintencance with TYPO3 (Content Management System)<br><a href="src/img/work-1.png">→ example</a></p></td>
+                        </tr>
+                        <tr>
+                            <td>04.2016 – 01.2017</td>
+                            <td><p>Member of the Athena-Minerva Cybathlon Team
+                                (TU Darmstadt) <br>in collaboration with the Max-Planck Institute Tübingen, <br>Darmstadt/Tübingen<br></p></td></tr>
+                        <tr>
+                                <td></td>
+                                <td><p>Participation in the Brain-Computer Interface Race. <br>Research of psychological and neurophysiological aspect in the Machine Learning field to decode activity patterns; Development of an Brain-Computer Interface.<br><a href="https://www.ias.informatik.tu-darmstadt.de/uploads/Team/DanielTanneberg/Cybathlon16_abstract_tamara.pdf">→ more</a></td>    
+                        </tr>
+                        <tr>
+                            <td>03.2017 – 06.2017</td>
+                            <td>
+                            <p>Student Employee<br>
+                            idatase GmbH, <br>Frankfurt am Main</p>
+                            </td></tr>
+                        <tr>
+                            <td></td>
+                            <td><p>Software-development and data analysis in the field: Machine Learning and Predictive Analytics; Conceptualization and design of pictograms and graphics<br><a href="src/img/work-2.png">→ example</a></p></td></tr>
+                        <tr>
+                            <td>09.2015 – 12.2016</td>
+                            <td> <p>Student Employee<br>
+                                Advancis Software & Services GmbH,<br> Langen</p></td>
+                        </tr>
+                        <tr>   <td></td><td>
+                            <p>Maintenance, Quality Managment and Sotware Testing for Security and Building Management Systems</p>                </td>
+                        </tr>
+
+                        </table>
+                </div></div>
+            <h3>references</h3>
+                <div class="raster-content">
+                 <ul>
+                    <li>Cybathlon Symposium: <br></li>
+                    <li class="intendlink">• <a href="https://www.ias.informatik.tu-darmstadt.de/uploads/Team/DanielTanneberg/Cybathlon16_abstract_tamara.pdf">"Personalized Brain-Computer Interfaces for Non-Laboratory Environments"(2016)</a></li>
+                    
+                    <li> Co-Authorship/Contributions: <br></li>
+                    <li class="intendlink">• <a href="https://www.ias.informatik.tu-darmstadt.de/uploads/Team/DanielTanneberg/Cybathlon16_abstract_natalie.pdf">"Neurofeedback for State of the Art Paradigms in Brain-Computer Interfacing"(2016)</a></li>
+                    <li class="intendlink">• <a href="http://tubiblio.ulb.tu-darmstadt.de/104089/">"TRIDEnT: Trustworthy collaboRative Intrusion DETection"(2017)</a></li>
+                    
+                <li>Exhibition: <a href="https://www.amorbach.de/files/file_15.06.2010_0ad5.pdf#page=13"> "30 Jahre Jugenkulturpreis"(2010)</a></li> 
+                    <li>Courses: <a href="https://www.dropbox.com/s/muuia4dvkeuf97s/courses_2009_AssessmentCenter.jpg?dl=0">AOK Assessment Center(2009)</a></li>
+
+
+                    <li>School Internships:
+                    <a href="https://www.dropbox.com/s/jt9a43uyccyrej2/schoolinternships_2009_police.jpg?dl=0">Police(2009)</a> | 
+                    <a href="https://www.dropbox.com/s/516vclzrqfm59yv/schoolinternships_2008_BVW-.jpg?dl=0">Tax Advisor(2008)</a> | 
+                    <a href="https://www.dropbox.com/s/5nhs1m5p9lg59k5/schoolinternships_2008_municipality.jpg?dl=0">Municipality(2008)</a><br></li>
+                   <li>Awards: Jugendkulturpreis (<a href="https://www.dropbox.com/s/6ls1tysk41m8b7y/awards_2006_Jugendkulturpreis.jpg?dl=0">2006</a> | 
+                    <a href="https://www.dropbox.com/s/6danz44uske22w8/awards_2007_Jugendkulturpreis.jpg?dl=0">2007</a> |
+                    <a href="https://www.main-echo.de/regional/kreis-miltenberg/art4019,407828">2008</a>)</li>
+                    
+                    </ul>
+            </div>
+            </section>
+            
+            <section id="contact">
+                <h2>contact</h2>
+            <div class="raster-container">
+                
+                <p> You can find the legal disclosure <b><a href="/legaldisclosure"> here</a></b><br><br>
+                    For questions etc. feel free to contact me:<br> 
+                    E-Mail: <img src="src/img/mail.png" alt="email"><br>
+                    or telephone:<b> +49 157 454 1992</b><br>
+                <br>
+                Follow me on Instagram: <a href="https://www.instagram.com/major_tam/">@major_tam</a></p>
+                </div>
+                <h3>sources</h3>
+               <div class="raster-content">
+               Fonts:
+                       <ul><li>https://fonts.google.com/specimen/Roboto by Christian Robertson</li><li>
+                   https://fonts.google.com/specimen/Roboto+Mono by Christian Robertson
+                           </li></ul>
+               </div>
+            </section>
+        </div>
+        <script>
+            var toggleClass = function(selector, class_name) {
+                var elements = document.querySelectorAll(selector); 
+
+                for (i = 0; i < elements.length; i++) {
+                    var singleElement = elements[i];
+                    singleElement.classList.toggle(class_name);
+                }
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+        <script src="src/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            
+            var descriptions_foto = ["My neighbour Manfred accompanies me my whole life. Even though we are not related by blood he became an essential part of my family. <br>'Mein Nachbar' is a booklet which emerged from the course 'Fotografie 2' by Stefan Bayer in 2018. <br> <br> <a href='https://www.dropbox.com/s/ 05lj4w62x1t634y/2018_meinnachbar.pdf? dl=0'>→ click here for complete work<br>(only in German)</a> ",
+            
+            "Trennfurt, 2017<br> When I was a child, this was a store for all kinds of beverages. Mostly beer. The shop owner had more wrinkles than skin in his face. He seemed very old, always walked slowly, always a cigarette in his mouth and lots of coughing. His friends were always muttering to themselves when they were sitting together near the counter, playing cards. They might had a beer or two at only 12 pm. At least it seemed so. The whole room were filled with clouds of smoke and it was hard to breath.",
+                                    
+            "In this work the subject of evanescence is not only processed in a contextual sense but also in an atmospheric kind. The observer is forced to feel discomfort. A vague oppressive feeling which he cannot describe. The photo series is accompanied by a prosaic text.'Temporäre Landschaften' is a series of photos created in the course '2- und 3-dimensionales Gestalten' by Prof. Michael Kerstgens in 2017/18. <br><br><a href='https://www.dropbox.com/s/a8woyf05v7zgvhq/ 2017_tempor%C3%A4reLandschaften.pdf?dl=0'>→ click here for complete work (only in German)</a>",
+                                     
+            "Frankfurt, 2017 <br><br> <a href='https://www.dropbox.com/s/f31fhs7nhlj5bng/2017_arch.png?dl=0'>→ click here to view in<br>full resolution</a>",
+                                
+            "Some kind of Nature, 2018<br><br> <a href='https://www.dropbox.com/s/bqbtoifbrgr6bov/2018_nature.JPG?dl=0'>→ click here to view in<br>full resolution</a>"];
+            
+             $(document).on('ready', function() {
+                $('div#slides_foto').slick({
+                    dots: true,
+                    appendArrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                    pauseOnDotsHover: true,
+                    pauseOnHover: true,
+                });
+            });
+            
+            $("div#slides_foto").on('afterChange', function(event, slick, currentSlide) {
+                $("p#slide-description_foto").html(descriptions_foto[currentSlide]);
+            });
+            
+            var descriptions_design = ["'I’m here to learn' (2018) is a french fold brochure, a mock-up advertisement created in the course 'Typografie 2' by Rade Matic for the exhibition 'i am here to learn'. <br> Where a computer is able to find patterns, the  given data often convey the impression of pure chaos. With the Software 'Processing' I programmed random arrangements of the title 'i'm here to learn'and stacked them on top of each other. In the final phase a further digital abstraction was performed. The intention was that the viewer can only rudimentarily grasp whats behind the pattern.",
+                                        
+                "'SUN' is a series of poster designs which were created within the scope of the course 'Desktop-Publishing' by Ivana Sarko. The aim was to illustrate song lyrics which contain the word  'Sonne'/ 'Sun' without using it. <br><br><a href ='https://www.dropbox.com/sh/98cc7duwby0puvl/AABgC6lkSdFzno0rwbZKHC2Ra?dl=0'>→ click here for complete work</a> ",
+                                        
+                "'SUN' is a series of poster designs which were created within the scope of the course 'Desktop-Publishing' by Ivana Sarko. The aim was to illustrate song lyrics which contain the word  'Sonne'/ 'Sun' without using it. <br><br> <a href ='https://www.dropbox.com/sh/98cc7duwby0puvl/AABgC6lkSdFzno0rwbZKHC2Ra?dl=0'>→ click here for complete work</a> ",
+                                        
+                "'SUN' is a series of poster designs which were created within the scope of the course 'Desktop-Publishing' by Ivana Sarko. The aim was to illustrate song lyrics which contain the word  'Sonne'/ 'Sun' without using it. <br><br><a href ='https://www.dropbox.com/sh/98cc7duwby0puvl/AABgC6lkSdFzno0rwbZKHC2Ra?dl=0'>→ click here for complete work</a>"];
+            
+            $(document).on('ready', function() {
+                $('div#slides_design').slick({
+                    dots: true,
+                    appendArrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                    pauseOnDotsHover: true,
+                    pauseOnHover: true,
+                });
+            });
+            $("div#slides_design").on('afterChange', function(event, slick, currentSlide) {
+                $("p#slide-description_design").html(descriptions_design[currentSlide]);
+            });
+            var descriptions_art = ["'CR', 2017",
+                                    "'Things you can't see' (2017) is a series of illustration where the intention was to visualize phenomena of psychological nature. The subjects were aspiration, phantom pain, body-dismorphia, and the baader-meinhof phenomena.<br><br><a href='https://www.dropbox.com/sh/3ghlf8mm3obhob9/AABMmvcz8oh3wE8xRrEwkABna?dl=0'>→ click here to view in full resolution</a>",
+                                    
+                                    "easy waffle recipe, 2017<br><br><a href='https://www.dropbox.com/s/r23j2f6q35w5q1h/2017_easywaffles-recipe.png?dl=0'>→ click here to view in full resolution</a>",
+                                    
+                                    "'bubble boy' (2017) is a concept design for a comic about a boy who is lost in space. Due to the bubble around his head he has trouble finding to his way home.",
+                                    
+                                    "wedding card illustration, 2014"];
+            $(document).on('ready', function() {
+                $('div#slides_art').slick({
+                    dots: true,
+                    appendArrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 4000,
+                    pauseOnDotsHover: true,
+                    pauseOnHover: true,
+                });
+            });
+            $("div#slides_art").on('afterChange', function(event, slick, currentSlide) {
+                $("p#slide-description_art").html(descriptions_art[currentSlide]);
+            });
+        </script>
+	</body>
+
+</html>
