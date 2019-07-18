@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+        <!--import fonts-->
+        <style>@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto');
+        </style>
+        <!---import slick-->
+        <link rel="stylesheet" type="text/css" href="src/slick/slick.css">
+        <link rel="stylesheet" type="text/css" href="src/slick/slick-theme.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+		<title>OnePager</title>
+		<style type="text/css">
+            
+            body {
+                display: flex;
+                flex-wrap: wrap;
+                
+                font-size: 15pt;
+                font-family: 'Roboto', serif;
+                margin: 0px;
+                color: black;
+                background-color: rgba(78,75,254,0); 
+            }
+            p {
+                margin: 0px;
+            }
+            .raster-space {
+                width: 4%;
+                box-sizing: border-box;
+                height: 100%;
+            }
+            .raster-main { 
+                width: 96%;
+                padding-left: 1rem;
+                padding-right: 1rem;
+                box-sizing: border-box;
+                height: 100%;
+            }
+            .raster-container {
+                display: flex;
+            }
+            /*automatic*/
+            .raster-content {
+                flex: 1 1 0; 
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            /*custom*/
+            .spalte-1of4, .spalte-1of2, .spalte-3of4 {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            .spalte-1of4 {
+                width: 25%;
+                flex-basis: auto;
+            }
+            .spalte-1of2 {
+                width: 50%;
+            }
+            .spalte-3of4 {
+                width: 75%;
+                flex-basis: auto;
+            }
+            .is-left {
+                margin-right: 0;
+                margin-left: auto;
+            }
+            .is-centered {
+                margin-left: auto;
+                margin-right: auto;
+                max-width: 70vw;
+            }
+            .is-centered ul {
+                display: inline-block;
+            }
+            .is-vertically-centered {
+                align-items: center;   
+            }
+            /*------------------------------------------------*/
+            /***menu settings------------*/
+            .menu {
+                /*positioning*/
+                position: fixed;
+                
+                left: 4%;
+                width: 100%;
+                height: 100%;
+                
+                /*style*/
+                background-color: rgba(78,75,254,1);
+                transition: 0.7s;
+                transform: rotateY(270deg);
+                transform-origin: left;
+                
+                z-index: 1;
+            }
+            
+            .menu.is-visible {
+                display: block;
+                transition: 0.9s;
+                transform: rotateY(0deg); 
+             
+            }
+            /***menu link style-----------*/
+            
+            #nav {
+                /*zentrieren*/
+                position: fixed;
+                top: 50%;
+                /*width: 50%;*/
+                transform: translateY(-50%);
+            } 
+            /***menu toggle button------------*/
+            
+            .menu-toggle {
+                background-color: black;
+                color: white;
+                font-family: 'Roboto Mono', monospace;
+                font-weight: 300;
+                
+                position: fixed;
+                height: 100%;
+                width: inherit;
+                transition: 0.2s;
+            }
+            .menu-toggle:hover{
+                background-color: rgba(78,75,254,1);
+                color: black;
+                transition: 0.3s;
+            }
+           .menu-toggle-button {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+            .menu-toggle-button > span {
+                display: inline-block;
+                transform: rotate(-90deg);
+            }
+            /***hover effect menu links----*/
+            .scene {
+              /* perspective property */
+                width: 100%;
+                height: 100%;
+                perspective: 50vw;
+            }
+
+            .panel {
+                text-align: left;
+                margin: 2rem;
+                
+                transform-origin: left;
+                transition: 2s;
+            }
+            .panel:hover {
+                transform: rotateY(+40deg) ;
+                transition: 0.7s;
+            }
+          
+            .panel a {
+                font-family: 'Roboto Mono', monospace;
+                font-weight: 800;
+                font-size: 4.8rem;
+                color: black;
+                text-decoration: none;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                padding-bottom: 0.5rem;
+                padding-top: 0.5rem;
+                
+            }
+            .panel a:hover {
+                color:white;
+                background-color: black;
+                transition: 0.7s;
+            }
+            /***slick slider-----*/
+            button.slick-prev:before, button.slick-next:before {
+                color: black;   
+            }
+            #slideshow {
+                width: 50vw;
+                z-index: -1;
+            }
+            
+
+            /**-------------------*/
+            section {
+                min-height: 100vh;
+                padding-top: 0.9rem;
+                margin-bottom: -0.9rem;
+            }
+            img, video {
+                max-width: 100%;
+            }
+            h2, h3, h4 {
+                margin-bottom: 2rem;
+                font-family: 'Roboto Mono', monospace;
+                font-size: 1.8rem;
+                font-weight: 700;
+                display: block;
+            }
+            h2 {
+                font-size: 3.5em;
+                background-color: black;
+                color: white ;
+                padding-left: 20px;
+                margin-top: 0;
+                transition: 0.3s;
+            }
+            h2:hover{
+                background-color: rgba(78,75,254,1);
+                color: black;
+                transition: 0.2s;
+            }
+            h3 {
+                font-size: 3em;
+                margin-top: 5rem; 
+            }
+            h4 {
+                margin-top: 0em;
+                background-color: black;
+                color: white;
+                text-align: center;
+            }
+            .material-icons { 
+                font-size: 9em;
+                display: block;
+                padding-left: 10rem;
+                padding-right: 10rem;
+                padding-bottom: 1rem;
+                padding-top: 1rem;
+                background-color: rgba(78,75,254,1);
+            }
+            .align-left {
+                text-align: left;
+            }
+            .align-right {
+                text-align: right;
+            }
+            blockquote {
+                text-align: center;
+                max-width: 22em;
+                font-family: 'Roboto Mono',monospace;
+                font-size: 1.2em;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .author {
+                font-size: 0.8em;
+                margin-bottom: 2em;
+                margin-right: 7em;
+                text-align: right;
+                display:block
+            }
+            ul {
+                list-style: none;
+                padding-left: 0rem;
+            }
+            li {
+                margin-bottom: 0.2rem;
+            }
+            .goodandbad li::before, #source li::before {
+                content: "■ ";
+            }
+            a, a:active, a:checked {
+                color: rgba(78,75,254,1);
+            }
+            a:hover {
+                color: black;
+                background-color: rgba(78,75,254,1);
+            }
+        </style>
+	</head>
+
+	<body>
+        <!---Menübutton-->
+        <div class="raster-space">
+            <div class="menu-toggle" onclick="toggleClass('.menu', 'is-visible')">
+                <div class="menu-toggle-button">
+                    <span>
+                        menu
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!---Navigation-->
+        <div class="menu" onclick="toggleClass('.menu', 'is-visible')">
+                <div id="nav">
+                    <div class="scene"> 
+                        <div class="panel"><a href="#start">00 start</a></div>
+                        <div class="panel"><a href="#info">01 info</a></div>
+                        <div class="panel"><a href="#design">02 design</a></div>
+                        <div class="panel"><a href="#source">03 source</a></div>
+                    </div>
+                </div>
+           
+        </div>
+       
+        <div class="raster-main">
+            <!---SECTION: START------------------------------------>
+            <section id="start">
+                <h2>Hello! Nice to meet you!</h2>
+                <div class="raster-container">
+                    <div class="spalte-1of2">
+                    <p>This website was developed 2018/19 during the course "Darstellungsmethoden I" by Karsten Müller and it features <a href="https://vanholtz.co" target="_blank" class="sitename">https://vanholtz.co</a>. </p><p>
+                        And now you are going to out and why that website is cool (or innovative). Feel free to explore, learn and have fun!  </p><br><br>
+                    </div>
+                    </div>
+                <div class="raster-container">
+                    <div class="spalte-1of4 is-left">
+                        <p><strong>who did this one-pager?</strong></p>
+                        <ul><li>tamara frieß</li>
+                            <li>#755020</li>
+                            <li>t.friess@live.de</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <!---SECTION: INFO------------------------------------>
+            <section id="info">
+               
+                   <h2>01 info </h2>
+                <div class="raster-container is-vertically-centered">
+                    <div class="spalte-1of4">
+                        <p><a href="https://vanholtz.co" target="_blank" class="sitename">https://vanholtz.co</a> is the Portfolio for the Web Development Studio of <a href="#ericvanholtz">Eric Van Holtz</a>.<br></p>
+                        <p> The studio specializes in refined digital web experiences with a focus on animated, responsive, and interactive content. The design of the site is develeoped by <a href="https://www.behance.net/feint_studio">Bijan Powell</a>.</p>
+                    </div>
+                    <div class="spalte-3of4">
+                        <img src="src/media/main.png" alt="screenshot">
+                    </div>   
+                </div>
+            </section>
+        
+        
+        <section id="ericvanholtz">
+            <h3>eric van holtz</h3>
+            <div class="raster-container">
+                <div class="raster-content">
+                    <p>Specializing in refined digital web experiences with a focus on animated, responsive, and interactive content. Partnering with agencies and brands that value design and development integrity. Delivering highly executed front-end user experiences by paying close attention to the nuances of design, optimization, and performance.</p>
+                    <ul>
+                    <li>Studio of Eric Van Holtz</li>
+                    <li>Web Developer</li>
+                    <li>Portland Oregon</li>
+                    <li class="email"><a href="mailto:hello@vanholtz.co"><strong>hello@vanholtz.co</strong></a></li>
+                    </ul>
+
+                </div>
+                <div class="raster-content">
+                        <img src="src/media/ericvanholtz.jpg" alt="eric van holtz potrait">
+                </div>
+            </div>
+		</section>
+        
+        <!---SECTION: DESIGN----------------------------------->
+        
+        <section id="design">
+			<h2>02 design</h2>
+            <div class="raster-container">
+                
+                <div class="raster-content">
+                <video muted="" autoplay="" playsinline="" loop=""><source src="src/media/animation.mp4" type="video/mp4"></video>
+                </div>
+                
+                <div class="raster-content">
+                    <blockquote> "Animated typography is the anchor of the design and shows off the work Eric has done and is capable of doing."</blockquote><span class="author">— Brijan Powell</span>
+                    <blockquote>
+                        "A smooth scrolling technique mixed with custom eased animations makes the site feel smooth, refined, and natural. [...]. There are many animated nuances throughout the site and in UI interactions. I wanted the website to feel more like an app, where hovers and transitions between content felt fast and fluid."</blockquote><span class="author">— Eric van Holtz</span>
+                    <br> Read full interview on:  
+                    <a href="https://vanholtz.co/journal/collaboration/">https://vanholtz.co/journal/collaboration/</a>
+                </div>
+            </div>
+            </section>    
+        <section class="features">
+            <h3>features</h3>
+            <div class="is-centered">
+                
+                    <div id="slides">
+                            <div><img src="src/media/diashow01.png" alt="photo1"></div>
+                            <div><img src="src/media/diashow02.png" alt="photo2"></div>
+                            <div><img src="src/media/diashow03.png" alt="photo3"></div>
+                            <div><img src="src/media/diashow04.png" alt="photo4"></div>
+                            <div><img src="src/media/diashow05.png" alt="photo5"></div>
+                    </div>
+          
+            </div>
+        </section>
+            
+       <section class="goodandbad">
+           <h3>the good and the bad</h3>
+       
+           <div class="raster-container">
+               
+                    <div class="raster-content">
+                   <h4>good</h4>
+                   <ul><li>innovative bold design</li>
+                       <li>analog feel due to the 3D effect</li>
+                       <li>responsive design</li>
+                       <li>scrolling/hovering is haptic</li>
+                       <li>animations</li>
+                       <li>interactive menu</li>
+                       <li>app-like feeling</li>
+                       <li>impression of never leaving the site</li>
+                       <li>fun to use</li>
+                   </ul>
+               </div>
+                   <div class="raster-content">
+                       <h4>bad</h4>
+                        <ul>
+                            <li>scales bad on small screens</li>
+                            <li>effects get lost on big screens</li>
+                            <li>design mismatch on content</li>
+                            <li>chaotic appearance</li>
+                            <li>overuse of animation and transitions</li>
+                            <li>slow to use</li>
+                       </ul>
+                   </div>
+               
+               <div class="spalte-1of2">
+                    <i class="material-icons align-left">mood_bad</i>
+                    <i class="material-icons align-right">mood</i>
+               </div>  
+           </div>
+
+        </section>
+        <!--<section>
+            <blockquote>"Brijan is a die hard Photoshop user.
+            For development most of it was custom. There's a lot you can do with just the basic fundamentals. Basic Scroll was gaining attention for its use of CSS variables so I tried that out, and also used Flickity for the 	image carousels. Barba.js was used for the AJAX/XHR and page transitions." Interview thefwa.com
+           </blockquote>
+        </section>-->
+           <section id="source">
+               <h2>03 sources</h2>
+               <div class="raster-content">
+               <p>Find out what I used: </p><br>
+               Fonts:
+                       <ul><li>https://fonts.google.com/specimen/Roboto by Christian Robertson</li><li>
+                   https://fonts.google.com/specimen/Roboto+Mono by Christian Robertson
+                           </li></ul>
+                   <p>Rest:</p>
+                   <ul>
+                   <li>Icons: <a href="https://google.github.io/material-design-icons/">Material Icons Guide by Google</a></li>
+                   <li>Original Text (info): <a href="https://vanholtz.co/">https://vanholtz.co/</a></li>
+                   <li>Original Text (eric van holtz):<a href="https://www.linkedin.com/company/vanholtzco">https://www.linkedin.com/company/vanholtzco</a></li>
+                   <li>Original Text (design): <a href="https://vanholtz.co/journal/collaboration/">https://vanholtz.co/journal/collaboration/</a></li>
+               </ul>
+               <p>Click <a href="documentation.html">here</a> to read the full documentation of the design process of this website</p>
+               </div>
+            </section>
+        </div>
+        <script>
+            var toggleClass = function(selector, class_name) {
+                var elements = document.querySelectorAll(selector); 
+
+                for (i = 0; i < elements.length; i++) {
+                    var singleElement = elements[i];
+                    singleElement.classList.toggle(class_name);
+                }
+            }
+        </script>
+        <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+        <script src="src/slick/slick.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+             $(document).on('ready', function() {
+                $('div#slides').slick({
+                    dots: true,
+                    appendArrows: false,
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                });
+            });
+        </script>
+	</body>
+
+</html>

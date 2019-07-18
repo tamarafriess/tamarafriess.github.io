@@ -1,0 +1,21 @@
+Dokumentation One-Pager 
+Matr. Nr. 755020, Tamara Frieß
+
+Bei dem vorliegendem One-Pager handelt es sich um eine Webseite die mittels HTML/CSS und Javascript geschrieben wurde und das Internetportfolio von Eric Van Goltz featured.
+Der Schwerpunkt meiner Arbeit liegt vor allem auf (dreidimensionale, perspektivische) Animationen mit einem großformatigen, einfachen, kräftigem Design, welches an verschiedene Komponenten der VhC Webseite erinnern soll.
+
+Als „individuelle“ Schrift benutze ich Roboto und Roboto Mono (https://fonts.google.com/specimen/Roboto, https://fonts.google.com/specimen/Roboto+Mono) von Christian Robertson
+Ich benutze ein 2 spaltiges Raster als Grundlage, wobei die linke Spalte das Menü ist (4% breit) und sich in der rechten Spalte der Inhalt befindet. Der Inhalt ist in einem 4 spaltrigem Raster aufgeteilt. 
+
+Die Öffnung des Menüs, die einzelnen Links in dem Menü verändern durch Hovern ihren Zustand: sie werden perspektivisch nach hinten geklappt. Beim Hovern des Menü-Buttons und der Überschriften entsteht einen Farbwechsel. Diese Features habe ich jeweils mit CSS umgesetzt. Die Übergänge haben dementsprechend ein bestimmtes Zeitfenster (transitions) sobald der Effekt entsteht und wieder im Ursprungsstatus ist. 
+
+Zusätzlich gibt es ein paar weitere CSS Anpassungen. Farbe, Größe, Schnitt und Text-Orientierung, je nach Block und Inhalt sind verändert. Die Smilies befinden sich beispielsweise auf einer schwarzen Hintergrundfläche, ein Zitat wird zentriert und Links besitzen die gleiche Farbe wie das Menü. 
+
+Das Menü nimmt bei Aktivierung den ganzen Bildschirm ein und kann über einen fixierten Button der vertikal über die Seite läuft getoggelt werden die Menüfläche so wie die einzelnen Links sorgen ebenfalls zur Schließung des Menüs (Siehe Z. 30-34, Z. 84-142 (CSS), Z. 283-289 (HTML), Z. 455-463 (JS)).
+
+Die Menüfläche mit den einzelnen Links (Siehe Z. 151-179) befindet sich auf einer Fläche (scene Z. 144-149) welche durch das Attribut perspective so wie width und height zu einer perspektivischen Menüfläche wird. Die einzelnen Links haben ihren Fluchtpunkt in der Mitte des viewingwidth (Z. 148), durch Hover wird die perspektivische Darstellung angewendet (Z. 158-161). 
+
+Durch die Verwendung von Javascript-Methode toggle (Siehe Z. 455-463), und die Beschreibung der Perspektive bei Aktivierung und Deaktivierung der Menüfläche (Siehe Z. 84-99 transform, duration) entsteht ein 3D-Effekt beim Öffnen und Schließen des Menüs. Es entsteht der Effekt, dass das Menü rein und rausklappt, wie bei einem Ringbuchblock. 
+
+Ein weiteres Javascript befindet sich in der Sektion Features. Hierbei handelt es sich um die Javascript library SlickSlider von Ken Wheeler. In dem dazugehörigem JavaScript Teil (Z. 464-474) habe ich mich dazu entschieden für die automatisch ablaufende Diashow mit dots zu arbeiten, welche die aktuelle Position der Diashow anzeigen. Da ich die Dots an das bold Design anpassen wollte und man die Größe und Farbe nicht einfach über CSS festlegen konnte, habe ich in der Datei slick-theme.css die Parameter für Größe und Opacity verändert (Z. 123-168, 179-200).
+
